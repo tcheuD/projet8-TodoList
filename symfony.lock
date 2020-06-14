@@ -185,9 +185,6 @@
     "symfony/intl": {
         "version": "v4.4.10"
     },
-    "symfony/lts": {
-        "version": "4-dev"
-    },
     "symfony/mime": {
         "version": "v5.1.1"
     },
@@ -257,6 +254,9 @@
     "symfony/process": {
         "version": "v4.4.10"
     },
+    "symfony/profiler-pack": {
+        "version": "v1.0.4"
+    },
     "symfony/property-access": {
         "version": "v4.4.10"
     },
@@ -274,11 +274,32 @@
             "config/routes.yaml"
         ]
     },
+    "symfony/security-bundle": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "7b4408dc203049666fe23fabed23cbadc6d8440f"
+        },
+        "files": [
+            "config/packages/security.yaml"
+        ]
+    },
     "symfony/security-core": {
         "version": "v4.4.10"
     },
     "symfony/security-csrf": {
         "version": "v4.4.10"
+    },
+    "symfony/security-guard": {
+        "version": "v4.4.10"
+    },
+    "symfony/security-http": {
+        "version": "v4.4.10"
+    },
+    "symfony/stopwatch": {
+        "version": "v5.1.1"
     },
     "symfony/swiftmailer-bundle": {
         "version": "2.5",
@@ -345,6 +366,20 @@
     },
     "symfony/var-exporter": {
         "version": "v5.1.1"
+    },
+    "symfony/web-profiler-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "6bdfa1a95f6b2e677ab985cd1af2eae35d62e0f6"
+        },
+        "files": [
+            "config/packages/dev/web_profiler.yaml",
+            "config/packages/test/web_profiler.yaml",
+            "config/routes/dev/web_profiler.yaml"
+        ]
     },
     "symfony/web-server-bundle": {
         "version": "3.3",
