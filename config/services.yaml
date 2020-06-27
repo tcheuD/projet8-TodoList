@@ -24,16 +24,5 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    ## REMOVE LATER
-    AppBundle\:
-        resource: '../src/AppBundle/*'
-        exclude: '../src/AppBundle/{Entity,Repository}'
-
-    AppBundle\Controller\:
-        resource: '../src/AppBundle/Controller'
-        public: true
-        tags: ['controller.service_arguments']
-    ## END REMOVE LATER
-
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
