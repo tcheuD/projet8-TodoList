@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TaskController extends AbstractController
@@ -20,6 +22,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/create", name="task_create")
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function createAction(Request $request)
     {
@@ -31,6 +35,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            $task->setUser($this->getUser());
             $em->persist($task);
             $em->flush();
 
@@ -44,6 +49,9 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
+     * @param Task $task
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function editAction(Task $task, Request $request)
     {
@@ -67,8 +75,10 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * @param Task $task
+     * @return RedirectResponse
      */
-    public function toggleTaskAction(Task $task)
+    public function toggleTaskAction(Task $task): RedirectResponse
     {
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
@@ -80,6 +90,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
+     * @param Task $task
+     * @return RedirectResponse
      */
     public function deleteTaskAction(Task $task)
     {

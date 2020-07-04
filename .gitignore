@@ -20,7 +20,6 @@
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
-/phpunit.xml
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/framework-bundle ###
@@ -30,6 +29,19 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
-/vendor/
 ###< symfony/framework-bundle ###
 /composer.lock
+!/.php-version
+!/.web-server-pid
+/.php-version
+/.web-server-pid
+/.idea/dataSources.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/projet8-TodoList.iml
+/.idea/sensiolabsinsight-analysis-storage.xml
+/.idea/sensiolabsinsight-settings.xml
+/.idea/sensiolabsinsight-violations.xml
+/.idea/symfony2.xml
+/.idea/vcs.xml
