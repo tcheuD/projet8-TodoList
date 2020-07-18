@@ -12,8 +12,8 @@ class UserControllerTest extends BaseController
     {
         $client = self::$client;
         $client->request('GET', $url, [], [], [
-            'PHP_AUTH_USER' => 'test',
-            'PHP_AUTH_PW'   => 'test',
+            'PHP_AUTH_USER' => 'user1',
+            'PHP_AUTH_PW'   => 'password',
         ]);
 
         $this->assertSame(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
@@ -24,8 +24,8 @@ class UserControllerTest extends BaseController
     {
         $client = self::$client;
         $client->request('GET', $url, [], [], [
-            'PHP_AUTH_USER' => 'admin',
-            'PHP_AUTH_PW'   => 'admin',
+            'PHP_AUTH_USER' => 'user0',
+            'PHP_AUTH_PW'   => 'password',
         ]);
 
         $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
