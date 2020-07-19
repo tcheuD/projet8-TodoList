@@ -9,14 +9,22 @@ use App\Entity\User;
 use LogicException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 
 class TaskVoter extends Voter
 {
     public const DELETE = 'delete';
 
+    private Security $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     protected function supports($attribute, $subject): bool
     {
-        if ($attribute !==self::DELETE) {
+        if ($attribute !== self::DELETE) {
             return false;
         }
 
@@ -49,6 +57,11 @@ class TaskVoter extends Voter
 
     private function canDelete(Task $task, User $user): bool
     {
-        return $user === $task->getUser();
+        return $this->isUserTheSameAsAuthorOrIsUserAdminAndTaskAnon($task, $user);
+    }
+
+    private function isUserTheSameAsAuthorOrIsUserAdminAndTaskAnon(Task $task, User $user): bool
+    {
+        return $user === $task->getUser() || ($task->getUser() === null && $this->security->isGranted('ROLE_ADMIN'));
     }
 }

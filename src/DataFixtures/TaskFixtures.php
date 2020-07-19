@@ -19,7 +19,8 @@ class TaskFixtures extends BaseFixtures implements DependentFixtureInterface
                 $this->faker->dateTimeBetween('-100 days', '-1 days')
             );
             $task->setTitle('todo'.$i);
-            $task->setUser($this->getReference('user_'.$this->floor10($i)));
+            $task->setUser(
+                ($i === 30) ? (null) : ($this->getReference('user_'.$this->floor10($i))));
 
             return $task;
         });
