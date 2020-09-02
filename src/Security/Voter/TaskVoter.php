@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Security\Voter;
-
 
 use App\Entity\Task;
 use App\Entity\User;
@@ -50,9 +48,10 @@ class TaskVoter extends Voter
         switch ($attribute) {
             case self::DELETE:
                 return $this->canDelete($task, $user);
+            default:
+                throw new LogicException('This code should not be reached!');
         }
 
-        throw new LogicException('This code should not be reached!');
     }
 
     private function canDelete(Task $task, User $user): bool
