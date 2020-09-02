@@ -6,18 +6,18 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TaskControllerTest extends BaseController
 {
-    public function testTaskCantBeDeletedByNonAuthor()
+    public function testTaskCantBeDeletedByNonAuthor(): void
     {
         $client = self::$client;
-        $client->request('GET', '/tasks/16/delete', [], [], [
-            'PHP_AUTH_USER' => 'user0',
+        $client->request('GET', '/tasks/26/delete', [], [], [
+            'PHP_AUTH_USER' => 'user1',
             'PHP_AUTH_PW'   => 'password',
         ]);
 
-        $this->assertSame(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+        self::assertSame(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
     }
 
-    public function testTaskWithAnonUserCanBeDeletedByAdmin()
+    public function testTaskWithAnonUserCanBeDeletedByAdmin(): void
     {
         $client = self::$client;
         $client->request('GET', '/tasks/31/delete', [], [], [
@@ -25,10 +25,10 @@ class TaskControllerTest extends BaseController
             'PHP_AUTH_PW'   => 'password',
         ]);
 
-        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+        self::assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
     }
 
-    public function testTaskWithAnonUserCantBeDeletedByUser()
+    public function testTaskWithAnonUserCantBeDeletedByUser(): void
     {
         $client = self::$client;
         $client->request('GET', '/tasks/31/delete', [], [], [
@@ -36,10 +36,10 @@ class TaskControllerTest extends BaseController
             'PHP_AUTH_PW'   => 'password',
         ]);
 
-        $this->assertSame(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
+        self::assertSame(Response::HTTP_FORBIDDEN, $client->getResponse()->getStatusCode());
     }
 
-    public function testCreateAction()
+    public function testCreateAction(): void
     {
         $client = self::$client;
         $crawler = $client->request('GET', '/tasks/create', [], [], [
@@ -55,31 +55,31 @@ class TaskControllerTest extends BaseController
         );
 
         $client->submit($form);
-        $this->assertSame(
+        self::assertSame(
             302,
             $client->getResponse()->getStatusCode()
         );
 
         $crawler = $client->followRedirect();
-        $this->assertSame(1, $crawler->filter('div.alert.alert-success')->count());
+        self::assertSame(1, $crawler->filter('div.alert.alert-success')->count());
     }
 
-    public function testTaskListActionIfNotLogged()
+    public function testTaskListActionIfNotLogged(): void
     {
         $client = static::createClient();
         $client->request('GET', '/tasks');
 
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
+        self::assertSame(302, $client->getResponse()->getStatusCode());
     }
 
-    public function testEditTaskIfLoggedAndAdmin()
+    public function testEditTaskIfLoggedAndAdmin(): void
     {
         $client = self::$client;
         $crawler = $client->request('GET', '/tasks/1/edit', [], [], [
             'PHP_AUTH_USER' => 'user0',
             'PHP_AUTH_PW'   => 'password',
         ]);
-        $this->assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
+        self::assertSame(Response::HTTP_OK, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Modifier')->form(
             [
@@ -88,24 +88,24 @@ class TaskControllerTest extends BaseController
         );
         $client->submit($form);
 
-        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+        self::assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
 
         $crawler = $client->followRedirect();
-        $this->assertSame(1, $crawler->filter('div.alert.alert-success')->count());
+        self::assertSame(1, $crawler->filter('div.alert.alert-success')->count());
     }
 
-    public function testToogleTaskActionIfLoggedAndAdmin()
+    public function testToogleTaskActionIfLoggedAndAdmin(): void
     {
         $client = self::$client;
-        $crawler = $client->request('GET', '/tasks/1/toggle', [], [], [
+        $client->request('GET', '/tasks/1/toggle', [], [], [
             'PHP_AUTH_USER' => 'user0',
             'PHP_AUTH_PW'   => 'password',
         ]);
 
-        $this->assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
+        self::assertSame(Response::HTTP_FOUND, $client->getResponse()->getStatusCode());
 
         $crawler = $client->followRedirect();
-        $this->assertSame(1, $crawler->filter('div.alert.alert-success')->count());
+        self::assertSame(1, $crawler->filter('div.alert.alert-success')->count());
     }
 }
 
